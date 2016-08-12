@@ -1,5 +1,5 @@
 logging:
-  level: INFO
+  level: DEBUG
   loggers:
     com.github.stantonk: DEBUG
 

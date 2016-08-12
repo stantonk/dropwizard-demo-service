@@ -1,5 +1,7 @@
 package com.github.stantonk;
 
+import com.github.stantonk.db.PersonDao;
+import com.github.stantonk.exceptions.WebExceptionMapper;
 import com.github.stantonk.resources.PersonResource;
 import io.dropwizard.Application;
 import io.dropwizard.configuration.EnvironmentVariableSubstitutor;
@@ -36,8 +38,10 @@ public class DemoServiceApplication extends Application<DemoServiceConfiguration
                     final Environment environment) {
         final DBIFactory factory = new DBIFactory();
         final DBI jdbi = factory.build(environment, config.getDataSourceFactory(), "postgresql");
+        PersonDao personDao = jdbi.onDemand(PersonDao.class);
 
-        environment.jersey().register(new PersonResource());
+//        environment.jersey().register(new WebExceptionMapper());
+        environment.jersey().register(new PersonResource(jdbi, personDao));
     }
 
 }

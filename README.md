@@ -4,6 +4,7 @@
 # TODO graphite/statsd monitoring via GraphiteReporter and Dropwizard-metrics
 # TODO connection pooling
 # TODO admin interface
+# TODO testing examples
 
 
 
@@ -28,6 +29,9 @@ This example leverages postgresql, via:
 https://wiki.postgresql.org/wiki/PostgreSQL_For_Development_With_Vagrant
 
 vagrant up
+
+# bootstrap db schema
+psql -h localhost -U demoservice --password -p 15432 -f ./schema.sql
 
 How to start the DemoService application
 ---
