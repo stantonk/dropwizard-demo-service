@@ -67,8 +67,37 @@ curl -X GET -H 'Content-Type: application/json' -vs "http://localhost:8080/perso
 
 Health Check
 ---
-
 To see your applications health enter url `http://localhost:8081/healthcheck`
+
+You get a database and thread deadlock healthcheck out of the box.
+For example, here I will do a healthcheck, shut down the Vagrant VM in
+which the PostgreSQL database is running, and re-issue the healthcheck:
+
+```
+$  curl -s "http://localhost:8081/healthcheck" | jqc .
+{
+  "deadlocks": {
+    "healthy": true
+  },
+  "postgresql": {
+    "healthy": true
+  }
+}
+
+$  vagrant halt
+==> default: Attempting graceful shutdown of VM...
+
+$  curl -s "http://localhost:8081/healthcheck" | jqc .
+{
+  "deadlocks": {
+    "healthy": true
+  },
+  "postgresql": {
+    "healthy": false,
+    "message": "Unable to successfully check in 3 seconds"
+  }
+}
+```
 
 # TODO
 * healthchecks
@@ -77,6 +106,7 @@ To see your applications health enter url `http://localhost:8081/healthcheck`
 * graphite/statsd monitoring via GraphiteReporter and Dropwizard-metrics
 * admin interface demo
 * unit/integration testing examples
+* authentication
 * more stuff...
 
 
