@@ -63,7 +63,7 @@ How to start the DemoService application
 Exercising Crud Operations
 --------------------------
 curl -X POST -H 'Content-Type: application/json' -d '{"first_name": "Kevin", "last_name": "Stanton", "age": 35}' -vs "http://localhost:8080/person"
-
+curl -X GET -H 'Content-Type: application/json' -vs "http://localhost:8080/person/1"
 
 Health Check
 ---
