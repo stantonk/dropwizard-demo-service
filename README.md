@@ -60,6 +60,11 @@ How to start the DemoService application
 1. Start application with `java -jar target/demo-service-0.0.1-SNAPSHOT.jar server config.yml`
 1. To check that your application is running enter url `http://localhost:8080`
 
+Exercising Crud Operations
+--------------------------
+curl -X POST -H 'Content-Type: application/json' -d '{"first_name": "Kevin", "last_name": "Stanton", "age": 35}' -vs "http://localhost:8080/person"
+
+
 Health Check
 ---
 

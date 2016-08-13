@@ -1,7 +1,6 @@
 package com.github.stantonk;
 
 import com.github.stantonk.db.PersonDao;
-import com.github.stantonk.exceptions.WebExceptionMapper;
 import com.github.stantonk.resources.PersonResource;
 import io.dropwizard.Application;
 import io.dropwizard.configuration.EnvironmentVariableSubstitutor;
@@ -10,8 +9,11 @@ import io.dropwizard.jdbi.DBIFactory;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
 import org.skife.jdbi.v2.DBI;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class DemoServiceApplication extends Application<DemoServiceConfiguration> {
+    public static final Logger logger = LoggerFactory.getLogger(DemoServiceConfiguration.class);
 
     public static void main(final String[] args) throws Exception {
         new DemoServiceApplication().run(args);
