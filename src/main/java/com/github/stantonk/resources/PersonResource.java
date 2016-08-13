@@ -6,10 +6,7 @@ import org.skife.jdbi.v2.DBI;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.ws.rs.Consumes;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 
@@ -35,10 +32,16 @@ public class PersonResource {
         this.personDao = personDao;
     }
 
+    @GET
+    @Path("/{id}")
+    public Person getPerson(@PathParam("id") int id) {
+        return personDao.findById(id);
+    }
+
     @POST
     public Person addPerson(Person newPerson) {
-        int rowsCreated = personDao.create(newPerson);
-        logger.info("Created {} new person records", rowsCreated);
-        return newPerson;
+        Person p = personDao.create(newPerson);
+        logger.info("Created {} new person", p);
+        return p;
     }
 }

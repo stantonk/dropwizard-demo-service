@@ -1,7 +1,5 @@
 package com.github.stantonk.api;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import io.dropwizard.jackson.JsonSnakeCase;
 
 /**
@@ -10,11 +8,27 @@ import io.dropwizard.jackson.JsonSnakeCase;
 @JsonSnakeCase // use snake_case instead of camelCase when serializing/deserializing :)
 public class Person {
 
+    private Long id;
     private String firstName;
     private String lastName;
     private Integer age;
 
     public Person() {
+    }
+
+    public Person(long id, String firstName, String lastName, int age) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.age = age;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getFirstName() {
