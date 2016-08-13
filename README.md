@@ -70,40 +70,17 @@ Health Check
 
 To see your applications health enter url `http://localhost:8081/healthcheck`
 
-# TODO healthchecks
-# TODO database access with connection pooling
-# TODO load test demonstration with randomness
-# TODO graphite/statsd monitoring via GraphiteReporter and Dropwizard-metrics
-# TODO connection pooling
-# TODO admin interface
-# TODO testing examples
-# TODO more stuff...
+# TODO
+* healthchecks
+* add hikari connection pooling
+* load test demonstration with randomness
+* graphite/statsd monitoring via GraphiteReporter and Dropwizard-metrics
+* admin interface demo
+* unit/integration testing examples
+* more stuff...
 
 
 Licenses from software leveraged in this demo
 ---------------------------------------------
-https://github.com/jackdb/pg-app-dev-vm
-
-The MIT License (MIT)
-
-Copyright © JackDB, Inc. 2014
-
-Permission is hereby granted, free of charge, to any person obtaining
-a copy of this software and associated documentation files (the
-"Software"), to deal in the Software without restriction, including
-without limitation the rights to use, copy, modify, merge, publish,
-distribute, sublicense, and/or sell copies of the Software, and to
-permit persons to whom the Software is furnished to do so, subject to
-the following conditions:
-
-The above copyright notice and this permission notice shall be
-included in all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
-EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
-IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
-CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
-TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
-SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+https://raw.githubusercontent.com/jackdb/pg-app-dev-vm/master/LICENSE
 
