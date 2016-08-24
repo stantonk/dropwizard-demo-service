@@ -47,3 +47,7 @@ database:
 
   # the minimum amount of time an connection must sit idle in the pool before it is eligible for eviction
   minIdleTime: 1 minute
+
+  # validate a SQL connection is viable before borrowing from the pool
+  # this is rather *critical* if you want your service to recover loss of connectivity to the db
+  checkConnectionOnBorrow: true

@@ -70,9 +70,14 @@ Health Check
 To see your applications health enter url `http://localhost:8081/healthcheck`
 
 You get a database and thread deadlock healthcheck out of the box.
-For example, here I will do a healthcheck, shut down the Vagrant VM in
-which the PostgreSQL database is running, and re-issue the healthcheck:
 
+For example, this demonstrates:
+ 
+ 1. The Database Healthcheck
+ 2. Recovery upon return of the postgres database
+
+You could, for instance, use the healthcheck to pull an instance of your
+service out of a load balancer.
 ```
 $  curl -s "http://localhost:8081/healthcheck" | jqc .
 {
@@ -95,6 +100,20 @@ $  curl -s "http://localhost:8081/healthcheck" | jqc .
   "postgresql": {
     "healthy": false,
     "message": "Unable to successfully check in 3 seconds"
+  }
+}
+
+$  vagrant up
+Bringing machine 'default' up with 'virtualbox' provider...
+... snip
+
+$  curl -s "http://localhost:8081/healthcheck" | jqc .
+{
+  "deadlocks": {
+    "healthy": true
+  },
+  "postgresql": {
+    "healthy": true
   }
 }
 ```
