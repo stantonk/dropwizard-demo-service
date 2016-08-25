@@ -7,8 +7,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.ws.rs.*;
+import java.util.Optional;
 
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
+import static javax.ws.rs.core.Response.Status.NOT_FOUND;
 
 /**
  * Defines the Person Resource and all the supported HTTP verbs.
@@ -35,13 +37,19 @@ public class PersonResource {
     @GET
     @Path("/{id}")
     public Person getPerson(@PathParam("id") int id) {
-        return personDao.findById(id);
+        // demonstrates java.util.Optional's .orElseThrow()
+        // and the "Dropwizard preferred" way of returning JSON-serialized errors
+        // leveraging JAX-RS's WebApplicationException and standardized HTTP error Status enum.
+        // see: https://jax-rs-spec.java.net/nonav/2.0-rev-a/apidocs/index.html
+        return personDao
+                .findById(id)
+                .orElseThrow(() -> new WebApplicationException("Person not found.", NOT_FOUND));
     }
 
     @POST
     public Person addPerson(Person newPerson) {
         Person p = personDao.create(newPerson);
-        logger.info("Created {} new person", p);
+        logger.info("Created new person {}", p);
         return p;
     }
 }

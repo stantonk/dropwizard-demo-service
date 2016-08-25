@@ -1,5 +1,6 @@
 package com.github.stantonk.api;
 
+import com.google.common.base.MoreObjects;
 import io.dropwizard.jackson.JsonSnakeCase;
 
 /**
@@ -53,5 +54,15 @@ public class Person {
 
     public void setAge(Integer age) {
         this.age = age;
+    }
+
+    @Override
+    public String toString() {
+        return MoreObjects.toStringHelper(this)
+                .add("id", id)
+                .add("firstName", firstName)
+                .add("lastName", lastName)
+                .add("age", age)
+                .toString();
     }
 }

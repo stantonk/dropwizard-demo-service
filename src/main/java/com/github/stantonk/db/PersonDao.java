@@ -4,10 +4,12 @@ import com.github.stantonk.api.Person;
 import org.skife.jdbi.v2.StatementContext;
 import org.skife.jdbi.v2.sqlobject.*;
 import org.skife.jdbi.v2.sqlobject.customizers.RegisterMapper;
+import org.skife.jdbi.v2.sqlobject.customizers.SingleValueResult;
 import org.skife.jdbi.v2.tweak.ResultSetMapper;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Optional;
 
 /**
  * Data Access Object for the Person entity/Representation.
@@ -45,11 +47,15 @@ public interface PersonDao {
      * but it also gives you ultimate control over object construction and it is reusable throughout
      * the Dao, as demonstrated above in the create() method.
      *
+     * Also demonstrates integration with Java8's java.util.Optional via JDBI's @SingleValueResult
+     * in the event a Person cannot be found with a given id. Optionals are nice :-).
+     *
      * @param id
      * @return
      */
     @SqlQuery("select id, first_name, last_name, age from person where id= :id")
-    Person findById(@Bind("id") int id);
+    @SingleValueResult
+    Optional<Person> findById(@Bind("id") int id);
 
     class PersonMapper implements ResultSetMapper<Person> {
         @Override
