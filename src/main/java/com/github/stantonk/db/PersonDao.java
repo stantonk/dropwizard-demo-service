@@ -32,6 +32,7 @@ public interface PersonDao {
      * This also demonstrates a cool feature I didn't know existed in JDBI, the
      * GetGeneratedKeys annotation combined with a ResultSetMapper.
      * see: http://stackoverflow.com/questions/32478300/how-to-combine-jdbi-getgeneratedkeys-with-mapper
+     * This ensures the newly created row's primary key is dropped into the Person POJO.
      *
      * @param p
      * @return number of rows created
