@@ -8,6 +8,12 @@ SCRIPT
 
 Vagrant.configure("2") do |config|
   config.vm.provision "shell", inline: $script
+
+  config.vm.provider :virtualbox do |v|
+    v.customize ["modifyvm", :id, "--memory", "2048"]
+    v.customize ["modifyvm", :id, "--cpus", "2"]
+  end
+
 end
 
 Vagrant::Config.run do |config|
@@ -20,4 +26,8 @@ Vagrant::Config.run do |config|
   
   # PostgreSQL Server port forwarding
   config.vm.forward_port 5432, 15432
+  # Graphite web interface
+  config.vm.forward_port 443, 8443
+  # Graphite stats interface
+  config.vm.forward_port 2003, 20003
 end

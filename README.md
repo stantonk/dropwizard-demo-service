@@ -5,7 +5,7 @@ the Dropwizard REST Framework. It integrates many of the features with
 common external tools and systems, e.g.
 
 * PostgreSQL
-* StatsD/Graphite
+* StatsD/Graphite (https://localhost:8443/)
 * Nagios
 
 The service **will** implement a simple phone book. It demonstrates some

@@ -99,3 +99,11 @@ date > "$PROVISIONED_ON"
 echo "Successfully created PostgreSQL dev virtual machine."
 echo ""
 print_db_usage
+
+# Install Graphite via Synthesize just to get started quickly
+# see: https://graphiteapp.org/quick-start-guides/synthesize.html
+apt-get -y install unzip
+wget https://github.com/obfuscurity/synthesize/archive/master.zip
+unzip master.zip
+cd synthesize-master/
+./install

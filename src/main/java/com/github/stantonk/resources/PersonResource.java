@@ -1,5 +1,6 @@
 package com.github.stantonk.resources;
 
+import com.codahale.metrics.annotation.Timed;
 import com.github.stantonk.api.Person;
 import com.github.stantonk.db.PersonDao;
 import org.skife.jdbi.v2.DBI;
@@ -36,6 +37,7 @@ public class PersonResource {
 
     @GET
     @Path("/{id}")
+    @Timed
     public Person getPerson(@PathParam("id") int id) {
         // demonstrates java.util.Optional's .orElseThrow()
         // and the "Dropwizard preferred" way of returning JSON-serialized errors
@@ -47,6 +49,7 @@ public class PersonResource {
     }
 
     @POST
+    @Timed
     public Person addPerson(Person newPerson) {
         Person p = personDao.create(newPerson);
         logger.info("Created new person {}", p);

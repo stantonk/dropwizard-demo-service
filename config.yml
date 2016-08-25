@@ -3,6 +3,18 @@ logging:
   loggers:
     com.github.stantonk: DEBUG
 
+metrics:
+  reporters:
+    - type: graphite
+      durationUnit: milliseconds
+      rateUnit: seconds
+      useRegexFilters: false
+      # set this to 1 minute (or longer) in production; dropwizard-metrics handles pre-aggregation
+      # rendering statsd unnecessary -- provided you don't abuse graphite by sending too frequently
+      frequency: 5 seconds
+      port: 20003
+      prefix: demoservice
+
 # how to do environment variables
 # mySetting: ${DW_MY_SETTING}
 # defaultSetting: ${DW_DEFAULT_SETTING:-default value}
