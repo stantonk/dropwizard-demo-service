@@ -3,10 +3,13 @@ package com.github.stantonk.resources;
 import com.codahale.metrics.annotation.Timed;
 import com.github.stantonk.api.Person;
 import com.github.stantonk.db.PersonDao;
+import org.hibernate.validator.constraints.NotEmpty;
 import org.skife.jdbi.v2.DBI;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.annotation.Nonnull;
+import javax.validation.Valid;
 import javax.ws.rs.*;
 import java.util.Optional;
 
@@ -50,7 +53,7 @@ public class PersonResource {
 
     @POST
     @Timed
-    public Person addPerson(Person newPerson) {
+    public Person addPerson(@Valid @NotEmpty Person newPerson) {
         Person p = personDao.create(newPerson);
         logger.info("Created new person {}", p);
         return p;

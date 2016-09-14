@@ -3,6 +3,8 @@ package com.github.stantonk.api;
 import com.google.common.base.MoreObjects;
 import io.dropwizard.jackson.JsonSnakeCase;
 
+import javax.validation.constraints.NotNull;
+
 /**
  * Represents a Person
  */
@@ -10,8 +12,12 @@ import io.dropwizard.jackson.JsonSnakeCase;
 public class Person {
 
     private Long id;
+
+    @NotNull
     private String firstName;
+    @NotNull
     private String lastName;
+    @NotNull
     private Integer age;
 
     public Person() {

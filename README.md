@@ -8,7 +8,7 @@ common external tools and systems, e.g.
 * StatsD/Graphite (https://localhost:8443/)
 * Nagios
 
-The service **will** implement a simple phone book. It demonstrates some
+The service will implement a simple phone book. It demonstrates some
 simple CRUD operations. The real goal is not the service itself, but to
 demonstrate a reasonable and fairly robust approach to building a
 **production-ready** RESTful HTTP service in Dropwizard.
@@ -115,6 +115,58 @@ $  curl -s "http://localhost:8081/healthcheck" | jqc .
   "postgresql": {
     "healthy": true
   }
+}
+```
+
+Request tracing
+---------------
+TODO:
+
+Validators and HTTP Error codes
+-------------------------------
+By using validations, the appropriate HTTP error codes are automatically
+returned.
+
+E.g. by adding validators to fields on the `Person` Representation and
+@Valid` to the `addPerson()` method:
+
+```
+public class Person {
+
+    private Long id;
+
+    @NotNull
+    private String firstName;
+    @NotNull
+    private String lastName;
+    @NotNull
+    private Integer age;
+```
+
+```
+        @POST
+        @Timed
+        public Person addPerson(@Valid @NotEmpty Person newPerson) {
+            Person p = personDao.create(newPerson);
+            logger.info("Created new person {}", p);
+            return p;
+        }
+```
+
+A request missing a required `Person` attribute gets an HTTP 422 and an
+informative, standardized error message:
+
+```
+$  curl -X POST -H 'Content-Type: application/json' -d '{"last_name": "Washington", "age": 284}' -vs "http://localhost:8080/person" | jq .
+...
+> POST /person HTTP/1.1
+...
+< HTTP/1.1 422
+...
+{
+  "errors": [
+    "firstName may not be null"
+  ]
 }
 ```
 
