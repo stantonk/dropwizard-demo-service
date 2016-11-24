@@ -9,6 +9,9 @@ import javax.ws.rs.ext.ExceptionMapper;
 import java.util.HashMap;
 
 /**
+ * Render any errors in JSON, and lets you throw an exception to indicate any
+ * type of HTTP error.
+ *
  * https://nbsoftsolutions.com/blog/writing-a-dropwizard-json-app
  */
 public class WebExceptionMapper implements ExceptionMapper<WebApplicationException> {

@@ -1,11 +1,14 @@
 package com.github.stantonk;
 
 import com.github.stantonk.db.PersonDao;
+import com.github.stantonk.exceptions.WebExceptionMapper;
 import com.github.stantonk.resources.PersonResource;
 import io.dropwizard.Application;
+import io.dropwizard.assets.AssetsBundle;
 import io.dropwizard.configuration.EnvironmentVariableSubstitutor;
 import io.dropwizard.configuration.SubstitutingSourceProvider;
 import io.dropwizard.jdbi.DBIFactory;
+import io.dropwizard.jdbi.bundles.DBIExceptionsBundle;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
 import org.skife.jdbi.v2.DBI;
@@ -32,6 +35,7 @@ public class DemoServiceApplication extends Application<DemoServiceConfiguration
                         new EnvironmentVariableSubstitutor(false)
                 )
         );
+        bootstrap.addBundle(new AssetsBundle("/assets/", "/"));
 
     }
 
@@ -42,7 +46,7 @@ public class DemoServiceApplication extends Application<DemoServiceConfiguration
         final DBI jdbi = factory.build(environment, config.getDataSourceFactory(), "postgresql");
         PersonDao personDao = jdbi.onDemand(PersonDao.class);
 
-//        environment.jersey().register(new WebExceptionMapper());
+        environment.jersey().register(new WebExceptionMapper());
         environment.jersey().register(new PersonResource(jdbi, personDao));
     }
 

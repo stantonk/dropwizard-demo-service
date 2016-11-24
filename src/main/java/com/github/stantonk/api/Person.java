@@ -2,8 +2,9 @@ package com.github.stantonk.api;
 
 import com.google.common.base.MoreObjects;
 import io.dropwizard.jackson.JsonSnakeCase;
+import org.hibernate.validator.constraints.NotEmpty;
 
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 
 /**
  * Represents a Person
@@ -13,21 +14,24 @@ public class Person {
 
     private Long id;
 
-    @NotNull
+    @NotEmpty
     private String firstName;
-    @NotNull
+
+    @NotEmpty
     private String lastName;
-    @NotNull
-    private Integer age;
+
+    @NotEmpty
+    @Pattern(regexp="\\d{3}-\\d{3}-\\d{4}", message="Please enter a valid phone number as XXX-YYY-ZZZZ.")
+    private String phoneNumber;
 
     public Person() {
     }
 
-    public Person(long id, String firstName, String lastName, int age) {
+    public Person(long id, String firstName, String lastName, String phoneNumber) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.age = age;
+        this.phoneNumber = phoneNumber;
     }
 
     public Long getId() {
@@ -54,12 +58,12 @@ public class Person {
         this.lastName = lastName;
     }
 
-    public Integer getAge() {
-        return age;
+    public String getPhoneNumber() {
+        return phoneNumber;
     }
 
-    public void setAge(Integer age) {
-        this.age = age;
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 
     @Override
@@ -68,7 +72,7 @@ public class Person {
                 .add("id", id)
                 .add("firstName", firstName)
                 .add("lastName", lastName)
-                .add("age", age)
+                .add("phoneNumber", phoneNumber)
                 .toString();
     }
 }

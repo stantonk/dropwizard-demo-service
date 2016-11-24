@@ -1,6 +1,7 @@
 package com.github.stantonk.db;
 
 import com.github.stantonk.api.Person;
+import org.postgresql.util.PSQLException;
 import org.skife.jdbi.v2.StatementContext;
 import org.skife.jdbi.v2.sqlobject.*;
 import org.skife.jdbi.v2.sqlobject.customizers.RegisterMapper;
@@ -37,7 +38,7 @@ public interface PersonDao {
      * @param p
      * @return number of rows created
      */
-    @SqlUpdate("insert into person (first_name, last_name, age) values (:p.firstName, :p.lastName, :p.age)")
+    @SqlUpdate("insert into person (first_name, last_name, phone_number) values (:p.firstName, :p.lastName, :p.phoneNumber)")
     @GetGeneratedKeys(PersonMapper.class)
     Person create(@BindBean("p") Person p);
 
@@ -54,14 +55,14 @@ public interface PersonDao {
      * @param id
      * @return
      */
-    @SqlQuery("select id, first_name, last_name, age from person where id= :id")
+    @SqlQuery("select id, first_name, last_name, phone_number from person where id = :id")
     @SingleValueResult
     Optional<Person> findById(@Bind("id") int id);
 
     class PersonMapper implements ResultSetMapper<Person> {
         @Override
         public Person map(int i, ResultSet rs, StatementContext statementContext) throws SQLException {
-            return new Person(rs.getLong("id"), rs.getString("first_name"), rs.getString("last_name"), rs.getInt("age"));
+            return new Person(rs.getLong("id"), rs.getString("first_name"), rs.getString("last_name"), rs.getString("phone_number"));
         }
     }
 }

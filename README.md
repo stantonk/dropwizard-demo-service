@@ -9,14 +9,14 @@ common external tools and systems, e.g.
 * Nagios
 
 The service will implement a simple phone book. It demonstrates some
-simple CRUD operations. The real goal is not the service itself, but to
+basic CRUD operations. The real goal is not the service itself, but to
 demonstrate a reasonable and fairly robust approach to building a
 **production-ready** RESTful HTTP service in Dropwizard.
 
 Additionally, several features and practical approaches of modern Java 
 development will be demonstrated wherever possible.
 
-For example, Maven is an indispensible build tool, test runner, and
+For example, Maven is an indispensable build tool, test runner, and
 dependency management system for Java (and really all JVM development).
 While there are certainly many other newer tools similar to Maven
 (e.g. Gradle, Ivy, Sbt), Maven is probably the most ubiquitous and also
@@ -62,8 +62,14 @@ How to start the DemoService application
 
 Exercising Crud Operations
 --------------------------
-curl -X POST -H 'Content-Type: application/json' -d '{"first_name": "Kevin", "last_name": "Stanton", "age": 35}' -vs "http://localhost:8080/person"
-curl -X GET -H 'Content-Type: application/json' -vs "http://localhost:8080/person/1"
+curl -X POST \
+     -H 'Content-Type: application/json' \
+     -d '{"first_name": "Jenny", "last_name": "Jennerson", "phone_number": "111-867-5309"}' \
+     -vs "http://localhost:8080/api/person"
+     
+curl -X GET \
+     -H 'Content-Type: application/json' \
+     -vs "http://localhost:8080/api/person/1"
 
 Health Check
 ---

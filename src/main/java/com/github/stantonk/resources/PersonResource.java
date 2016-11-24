@@ -1,19 +1,26 @@
 package com.github.stantonk.resources;
 
+import com.codahale.metrics.annotation.ExceptionMetered;
 import com.codahale.metrics.annotation.Timed;
 import com.github.stantonk.api.Person;
 import com.github.stantonk.db.PersonDao;
 import org.hibernate.validator.constraints.NotEmpty;
+import org.postgresql.util.PSQLException;
 import org.skife.jdbi.v2.DBI;
+import org.skife.jdbi.v2.exceptions.DBIException;
+import org.skife.jdbi.v2.exceptions.UnableToExecuteStatementException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.annotation.Nonnull;
 import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import javax.ws.rs.*;
 import java.util.Optional;
 
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
+import static javax.ws.rs.core.Response.Status.CONFLICT;
+import static javax.ws.rs.core.Response.Status.INTERNAL_SERVER_ERROR;
 import static javax.ws.rs.core.Response.Status.NOT_FOUND;
 
 /**
@@ -53,9 +60,20 @@ public class PersonResource {
 
     @POST
     @Timed
-    public Person addPerson(@Valid @NotEmpty Person newPerson) {
-        Person p = personDao.create(newPerson);
-        logger.info("Created new person {}", p);
-        return p;
+    public Person addPerson(@NotNull @Valid Person newPerson) {
+        try {
+            Person p = personDao.create(newPerson);
+            logger.info("Created new person {}", p);
+            return p;
+        } catch (Exception e) {
+            // this is a little awkward
+            if (e.getCause() instanceof PSQLException) {
+                if (((PSQLException)e.getCause()).getSQLState().equals("23505")) {
+                    throw new WebApplicationException("Duplicate person object.", CONFLICT);
+                }
+            }
+            logger.error("unable to create new person {} reason={} ", newPerson, e.getMessage());
+            throw new WebApplicationException(e.getMessage(), INTERNAL_SERVER_ERROR);
+        }
     }
 }
